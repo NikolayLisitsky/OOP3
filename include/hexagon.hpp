@@ -19,7 +19,7 @@ public:
     Hexagon& operator=(Hexagon&& other) noexcept;
     
 private:
-    Point center_point;
+    Point center_;
     double radius;
     std::vector<Point> vertices;
 };

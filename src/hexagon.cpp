@@ -4,12 +4,12 @@
 const double PI = 3.14159265358979323846;
 
 Hexagon::Hexagon(const Hexagon& other) 
-    : center_point(other.center_point), radius(other.radius) {
+    : center_(other.center_), radius(other.radius) {
     vertices = other.vertices;
 }
 
 Hexagon::Hexagon(const Point& center, double radius) 
-    : center_point(center), radius(radius) {
+    : center_(center), radius(radius) {
     vertices.resize(6);
     for (int i = 0; i < 6; ++i) {
         double angle = 2 * PI * i / 6;
@@ -19,7 +19,7 @@ Hexagon::Hexagon(const Point& center, double radius)
 }
 
 Hexagon::Hexagon(Hexagon&& other) noexcept
-    : center_point(std::move(other.center_point))
+    : center_(std::move(other.center_))
     , radius(other.radius)
     , vertices(std::move(other.vertices))
 {
@@ -27,7 +27,7 @@ Hexagon::Hexagon(Hexagon&& other) noexcept
 }
 
 Point Hexagon::center() const {
-    return center_point;
+    return center_;
 }
 
 Hexagon::operator double() const {
@@ -45,7 +45,7 @@ void Hexagon::print(std::ostream& os) const {
 
 void Hexagon::read(std::istream& is) {
     std::cout << "Enter Hexagon center (x y): ";
-    is >> center_point.x >> center_point.y;
+    is >> center_.x >> center_.y;
     std::cout << "Enter radius: ";
     is >> radius;
     
@@ -53,8 +53,8 @@ void Hexagon::read(std::istream& is) {
     vertices.resize(6);
     for (int i = 0; i < 6; ++i) {
         double angle = 2 * PI * i / 6;
-        vertices[i] = Point(center_point.x + radius * cos(angle), 
-                           center_point.y + radius * sin(angle));
+        vertices[i] = Point(center_.x + radius * cos(angle), 
+                           center_.y + radius * sin(angle));
     }
 }
 
@@ -62,17 +62,17 @@ bool Hexagon::operator==(const Figure& other) const {
     const Hexagon* hexagon = dynamic_cast<const Hexagon*>(&other);
     if (!hexagon) return false;
     
-    return center_point == hexagon->center_point && 
+    return center_ == hexagon->center_ && 
            std::abs(radius - hexagon->radius) < 1e-9;
 }
 
 Figure* Hexagon::clone() const {
-    return new Hexagon(this->center_point, this->radius);
+    return new Hexagon(this->center_, this->radius);
 }
 
 Hexagon& Hexagon::operator=(const Hexagon& other) {
     if (this != &other) {
-        center_point = other.center_point;
+        center_ = other.center_;
         radius = other.radius;
         vertices = other.vertices;
     }
@@ -81,7 +81,7 @@ Hexagon& Hexagon::operator=(const Hexagon& other) {
 
 Hexagon& Hexagon::operator=(Hexagon&& other) noexcept {
     if (this != &other) {
-        center_point = std::move(other.center_point);
+        center_ = std::move(other.center_);
         radius = other.radius;
         vertices = std::move(other.vertices);
         other.radius = 0;

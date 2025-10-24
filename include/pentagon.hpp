@@ -20,7 +20,7 @@ public:
     Pentagon& operator=(Pentagon&& other) noexcept; // Перемещение
     
 private:
-    Point center_point;
+    Point center_;
     double radius;
     std::vector<Point> vertices;
 };
