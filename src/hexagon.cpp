@@ -36,7 +36,7 @@ Hexagon::operator double() const {
 }
 
 void Hexagon::print(std::ostream& os) const {
-    os << "Hexagon vertices: [";
+    os << "Hexagon вершины: [";
     for (const auto& vertex : vertices) {
         os << "(" << vertex.x << ", " << vertex.y << ") ";
     }
@@ -44,9 +44,9 @@ void Hexagon::print(std::ostream& os) const {
 }
 
 void Hexagon::read(std::istream& is) {
-    std::cout << "Enter Hexagon center (x y): ";
+    std::cout << "Введите координаты (x y): ";
     is >> center_.x >> center_.y;
-    std::cout << "Enter radius: ";
+    std::cout << "Введите радиус: ";
     is >> radius;
     
     // Пересчитываем вершины

@@ -36,7 +36,7 @@ Octagon::operator double() const {
 }
 
 void Octagon::print(std::ostream& os) const {
-    os << "Octagon vertices: [";
+    os << "Octagon вершины: [";
     for (const auto& vertex : vertices) {
         os << "(" << vertex.x << ", " << vertex.y << ") ";
     }
@@ -44,9 +44,9 @@ void Octagon::print(std::ostream& os) const {
 }
 
 void Octagon::read(std::istream& is) {
-    std::cout << "Enter Octagon center (x y): ";
+    std::cout << "Введите координаты (x y): ";
     is >> center_.x >> center_.y;
-    std::cout << "Enter radius: ";
+    std::cout << "Введите радиус: ";
     is >> radius;
     
     // Пересчитываем вершины

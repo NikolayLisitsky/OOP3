@@ -4,113 +4,117 @@
 #include "include/hexagon.hpp"
 #include "include/octagon.hpp"
 
-void printMenu() {
-    std::cout << "\n=== Figure Management System ===" << std::endl;
-    std::cout << "Menu:" << std::endl;
-    std::cout << "1. Add Pentagon" << std::endl;
-    std::cout << "2. Add Hexagon" << std::endl;
-    std::cout << "3. Add Octagon" << std::endl;
-    std::cout << "4. Print All Figures" << std::endl;
-    std::cout << "5. Calculate Total Area" << std::endl;
-    std::cout << "6. Remove Figure" << std::endl;
-    std::cout << "7. Get Figure by Index" << std::endl;
-    std::cout << "0. Exit" << std::endl;
-    std::cout << "Enter your choice: ";
+// Выводит главное меню программы
+void showMenu() {
+    std::cout << "\n=== Система управления фигурами ===\n";
+    std::cout << "Выберите действие:\n";
+    std::cout << "1. Добавить пятиугольник\n";
+    std::cout << "2. Добавить шестиугольник\n";
+    std::cout << "3. Добавить восьмиугольник\n";
+    std::cout << "4. Показать все фигуры\n";
+    std::cout << "5. Посчитать общую площадь\n";
+    std::cout << "6. Удалить фигуру\n";
+    std::cout << "7. Получить фигуру по номеру\n";
+    std::cout << "0. Выйти\n";
+    std::cout << "Ваш выбор: ";
 }
 
-void printAllFigures(const Array& array) {
-    if (array.getSize() == 0) {
-        std::cout << "No figures in array." << std::endl;
+// Выводит все фигуры из массива
+void displayFigures(const Array& arr) {
+    if (arr.getSize() == 0) {
+        std::cout << "Массив пуст.\n";
         return;
     }
-    
-    for (size_t i = 0; i < array.getSize(); ++i) {
-        Figure* fig = array.get(i);
-        std::cout << "Figure " << i + 1 << ": " << *fig 
-                  << ", Area: " << static_cast<double>(*fig) 
-                  << ", Center: (" << fig->center().x 
-                  << ", " << fig->center().y << ")" << std::endl;
+
+    for (size_t i = 0; i < arr.getSize(); ++i) {
+        Figure* f = arr.get(i);
+        std::cout << "Фигура #" << (i + 1) << ": " << *f
+                  << " | Площадь: " << static_cast<double>(*f)
+                  << " | Центр: (" << f->center().x << ", " << f->center().y << ")\n";
     }
 }
 
-double totalArea(const Array& array) {
-    double total = 0;
-    for (size_t i = 0; i < array.getSize(); ++i) {
-        total += static_cast<double>(*array.get(i));
+// Считает суммарную площадь всех фигур
+double computeTotalArea(const Array& arr) {
+    double sum = 0.0;
+    for (size_t i = 0; i < arr.getSize(); ++i) {
+        sum += static_cast<double>(*arr.get(i));
     }
-    return total;
+    return sum;
 }
 
 int main() {
-    Array figuresArray;
-    int choice;
-    
+    Array container;
+    int option;
+
     do {
-        printMenu();
-        std::cin >> choice;
-        
-        switch (choice) {
+        showMenu();
+        std::cin >> option;
+
+        switch (option) {
             case 1: {
-                Pentagon* pentagon = new Pentagon();
-                std::cin >> *pentagon;
-                figuresArray.add(pentagon);
-                std::cout << "Pentagon added successfully!" << std::endl;
+                auto* p = new Pentagon();
+                std::cout << "Введите данные для пятиугольника:\n";
+                std::cin >> *p;
+                container.add(p);
+                std::cout << "Пятиугольник успешно добавлен!\n";
                 break;
             }
             case 2: {
-                Hexagon* hexagon = new Hexagon();
-                std::cin >> *hexagon;
-                figuresArray.add(hexagon);
-                std::cout << "Hexagon added successfully!" << std::endl;
+                auto* h = new Hexagon();
+                std::cout << "Введите данные для шестиугольника:\n";
+                std::cin >> *h;
+                container.add(h);
+                std::cout << "Шестиугольник успешно добавлен!\n";
                 break;
             }
             case 3: {
-                Octagon* octagon = new Octagon();
-                std::cin >> *octagon;
-                figuresArray.add(octagon);
-                std::cout << "Octagon added successfully!" << std::endl;
+                auto* o = new Octagon();
+                std::cout << "Введите данные для восьмиугольника:\n";
+                std::cin >> *o;
+                container.add(o);
+                std::cout << "Восьмиугольник успешно добавлен!\n";
                 break;
             }
             case 4:
-                printAllFigures(figuresArray);
+                displayFigures(container);
                 break;
             case 5:
-                std::cout << "Total area of all figures: " << totalArea(figuresArray) << std::endl;
+                std::cout << "Общая площадь: " << computeTotalArea(container) << "\n";
                 break;
             case 6: {
-                size_t index;
-                std::cout << "Enter index to remove (1-" << figuresArray.getSize() << "): ";
-                std::cin >> index;
-                if (index >= 1 && index <= figuresArray.getSize()) {
-                    figuresArray.remove(index - 1);
-                    std::cout << "Figure removed successfully!" << std::endl;
+                size_t idx;
+                std::cout << "Номер фигуры для удаления (от 1 до " << container.getSize() << "): ";
+                std::cin >> idx;
+                if (idx >= 1 && idx <= container.getSize()) {
+                    container.remove(idx - 1);
+                    std::cout << "Фигура удалена.\n";
                 } else {
-                    std::cout << "Invalid index!" << std::endl;
+                    std::cout << "Неверный номер.\n";
                 }
                 break;
             }
             case 7: {
-                size_t index;
-                std::cout << "Enter index to get (1-" << figuresArray.getSize() << "): ";
-                std::cin >> index;
-                if (index >= 1 && index <= figuresArray.getSize()) {
-                    Figure* fig = figuresArray.get(index - 1);
-                    std::cout << "Figure " << index << ": " << *fig 
-                              << ", Area: " << static_cast<double>(*fig) 
-                              << ", Center: (" << fig->center().x 
-                              << ", " << fig->center().y << ")" << std::endl;
+                size_t idx;
+                std::cout << "Номер фигуры для просмотра (от 1 до " << container.getSize() << "): ";
+                std::cin >> idx;
+                if (idx >= 1 && idx <= container.getSize()) {
+                    Figure* f = container.get(idx - 1);
+                    std::cout << "Фигура #" << idx << ": " << *f
+                              << " | Площадь: " << static_cast<double>(*f)
+                              << " | Центр: (" << f->center().x << ", " << f->center().y << ")\n";
                 } else {
-                    std::cout << "Invalid index!" << std::endl;
+                    std::cout << "Неверный номер.\n";
                 }
                 break;
             }
             case 0:
-                std::cout << "Exit" << std::endl;
+                std::cout << "Завершение работы.\n";
                 break;
             default:
-                std::cout << "Invalid choice!" << std::endl;
+                std::cout << "Такого пункта нет. Попробуйте снова.\n";
         }
-    } while (choice != 0);
-    
+    } while (option != 0);
+
     return 0;
 }

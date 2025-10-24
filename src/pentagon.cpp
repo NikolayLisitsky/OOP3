@@ -37,7 +37,7 @@ Pentagon::operator double() const {
 }
 
 void Pentagon::print(std::ostream& os) const {
-    os << "Pentagon vertices: [";
+    os << "Pentagon вершины: [";
     for (const auto& vertex : vertices) {
         os << "(" << vertex.x << ", " << vertex.y << ") ";
     }
@@ -45,9 +45,9 @@ void Pentagon::print(std::ostream& os) const {
 }
 
 void Pentagon::read(std::istream& is) {
-    std::cout << "Enter Pentagon center (x y): ";
+    std::cout << "Введите координаты (x y): ";
     is >> center_.x >> center_.y;
-    std::cout << "Enter radius: ";
+    std::cout << "Введите радиус: ";
     is >> radius;
     
     // Пересчитываем вершины

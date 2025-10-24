@@ -105,7 +105,7 @@ TEST(IOStreamTest, PentagonPrint) {
     std::ostringstream oss;
     oss << p;
     std::string output = oss.str();
-    EXPECT_NE(output.find("Pentagon vertices:"), std::string::npos);
+    EXPECT_NE(output.find("Pentagon вершины:"), std::string::npos);
     EXPECT_NE(output.find("(1"), std::string::npos); // первая вершина ~ (1,0)
 }
 
@@ -114,7 +114,7 @@ TEST(IOStreamTest, HexagonPrint) {
     std::ostringstream oss;
     oss << h;
     std::string output = oss.str();
-    EXPECT_NE(output.find("Hexagon vertices:"), std::string::npos);
+    EXPECT_NE(output.find("Hexagon вершины:"), std::string::npos);
 }
 
 TEST(IOStreamTest, OctagonPrint) {
@@ -122,7 +122,7 @@ TEST(IOStreamTest, OctagonPrint) {
     std::ostringstream oss;
     oss << o;
     std::string output = oss.str();
-    EXPECT_NE(output.find("Octagon vertices:"), std::string::npos);
+    EXPECT_NE(output.find("Octagon вершины:"), std::string::npos);
 }
 
 // Тесты move-семантики
